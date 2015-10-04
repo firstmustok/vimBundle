@@ -31,12 +31,15 @@ Plugin 'honza/vim-snippets'
 Plugin 'ervandew/supertab'
 
 Plugin 'scrooloose/syntastic'
+
 "######### Languages ###########
 Plugin 'rust-lang/rust.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'fatih/vim-go'
+
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'kchmck/vim-coffee-script'
 
 " buffer
 Plugin 'jlanzarotta/bufexplorer'
@@ -44,6 +47,8 @@ Plugin 'jlanzarotta/bufexplorer'
 " aux
 Plugin 'vimwiki'
 Plugin 'Markdown'
+Plugin 'vim-scripts/VisIncr'
+Plugin 'junegunn/vim-easy-align'
 
 call vundle#end()
 "filetype plugin indent on
@@ -120,6 +125,12 @@ map <leader>c :wincmd q<cr>
 " moving up and down work as you would expect
 nnoremap <silent> j gj
 nnoremap <silent> k gk
+
+"Move a line of text using control
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " helpers for dealing with other people's code
 nmap \t :set ts=4 sts=4 sw=4 noet<cr>
@@ -201,6 +212,8 @@ let g:airline_symbols.linenr = '⭡'
 
 " buffer
 map <silent> <leader>ff :only<cr>
+"Fast open a buffer by search for a name
+map <c-q> :sb
 
 " rainbow parenthess
 Plugin 'kien/rainbow_parentheses.vim'
@@ -265,3 +278,13 @@ nmap <leader>t <Plug>(easymotion-tn)
 "map  N <Plug>(easymotion-prev)
 map <silent> <leader><cr> :noh<cr>
 
+"for align separator
+"{ Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
+
+"for align with :
+vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
+"}
