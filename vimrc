@@ -1,6 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " load plugins from vundle
 filetype off
@@ -49,6 +48,7 @@ Plugin 'vimwiki'
 Plugin 'Markdown'
 Plugin 'vim-scripts/VisIncr'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 "filetype plugin indent on
@@ -103,7 +103,8 @@ syntax on
 set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace"
 set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
-set background=dark
+set term=screen-256color
+"set background=dark
 "colorscheme delek
 colorscheme molokai
 
@@ -121,6 +122,10 @@ set laststatus=2 " show the satus line all the time
 map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
 
 map <leader>c :wincmd q<cr>
+
+"""misc for tmux
+"autocmd VimEnter * silent !tmux set status off
+"autocmd VimLeave * silent !tmux set status on
 
 " moving up and down work as you would expect
 nnoremap <silent> j gj
@@ -288,3 +293,18 @@ nmap <Leader>a <Plug>(EasyAlign)
 "for align with :
 vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
 "}
+
+"""""""""""""""""""""""""""""""""""""""""""
+" => syntastic plugin
+"""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'passive_filetypes': ['cpp', 'c']  }
+"let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+
