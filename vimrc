@@ -81,6 +81,14 @@ set foldnestmax=10 " deepest fold is 10 levels
 set nofoldenable " don't fold by default
 set foldlevel=1
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Files and backups
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Turn backup off
+set nobackup
+set nowb
+set noswapfile
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User Interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -121,7 +129,7 @@ set laststatus=2 " show the satus line all the time
 
 map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
 
-map <leader>c :wincmd q<cr>
+map <leader>d :wincmd q<cr>
 
 """misc for tmux
 "autocmd VimEnter * silent !tmux set status off
