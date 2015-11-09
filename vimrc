@@ -53,126 +53,6 @@ Plugin 'jiangmiao/auto-pairs'
 call vundle#end()
 "filetype plugin indent on
 
-set nocompatible " not compatible with vi
-set autoread " detect when a file is changed
-
-" make backspace behave in a sane manner
-set backspace=indent,eol,start
-
-" set a map leader for more key combos
-let mapleader = ','
-
-" Tab control
-set noexpandtab " tabs ftw
-set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-set tabstop=4 " the visible width of tabs
-set softtabstop=4 " edit as if the tabs are 4 characters wide
-set shiftwidth=4 " number of spaces to use for indent and unindent
-set shiftround " round indent to a multiple of 'shiftwidth'
-
-set clipboard=unnamed
-
-" faster redrawing
-set ttyfast
-
-" code folding settings
-set foldmethod=syntax " fold based on indent
-set foldnestmax=10 " deepest fold is 10 levels
-set nofoldenable " don't fold by default
-set foldlevel=1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Files and backups
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Turn backup off
-set nobackup
-set nowb
-set noswapfile
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => User Interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Searching
-set ignorecase " case insensitive searching
-set smartcase " case-sensitive if expresson contains a capital letter
-set hlsearch
-set incsearch " set incremental search, like modern browsers
-set nolazyredraw " don't redraw while executing macros
-
-set magic " Set magic on, for regex
-
-set showmatch " show matching braces
-set mat=2 " how many tenths of a second to blink
-
-" switch syntax highlighting on
-syntax on
-
-set encoding=utf8
-let base16colorspace=256  " Access colors present in 256 colorspace"
-set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
-set term=screen-256color
-"set background=dark
-"colorscheme delek
-colorscheme molokai
-
-set number
-
-set autoindent " automatically set indent of new line
-set smartindent
-
-set laststatus=2 " show the satus line all the time
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
-
-map <leader>d :wincmd q<cr>
-
-"""misc for tmux
-"autocmd VimEnter * silent !tmux set status off
-"autocmd VimLeave * silent !tmux set status on
-
-" moving up and down work as you would expect
-nnoremap <silent> j gj
-nnoremap <silent> k gk
-
-"Move a line of text using control
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-" helpers for dealing with other people's code
-nmap \t :set ts=4 sts=4 sw=4 noet<cr>
-nmap \s :set ts=4 sts=4 sw=4 et<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-map <C-h> :call WinMove('h')<cr>
-map <C-j> :call WinMove('j')<cr>
-map <C-k> :call WinMove('k')<cr>
-map <C-l> :call WinMove('l')<cr>
-
-" Window movement shortcuts
-" move to the window in the direction shown, or create a new window
-function! WinMove(key)
-    let t:curwin = winnr()
-    exec "wincmd ".a:key
-    if (t:curwin == winnr())
-        if (match(a:key,'[jk]'))
-            wincmd v
-        else
-            wincmd s
-        endif
-        exec "wincmd ".a:key
-    endif
-endfunction
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -315,4 +195,133 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = { 'passive_filetypes': ['cpp', 'c']  }
 "let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Basic settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible " not compatible with vi
+set autoread     " detect when a file is changed
+
+" make backspace behave in a sane manner
+set backspace=indent,eol,start
+
+" set a map leader for more key combos
+let mapleader = ','
+let g:mapleader = ","
+
+" show tab like >--- and space like ----
+set list
+set listchars=tab:>-,trail:-
+
+" Tab control
+"set noexpandtab " tabs ftw
+set smarttab       " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=4      " the visible width of tabs
+set softtabstop=4  " edit as if the tabs are 4 characters wide
+set shiftwidth=4   " number of spaces to use for indent and unindent
+set shiftround     " round indent to a multiple of 'shiftwidth'
+
+set clipboard=unnamed
+
+" faster redrawing
+set ttyfast
+
+" code folding settings
+set foldmethod=syntax " fold based on indent
+set foldnestmax=10 " deepest fold is 10 levels
+set nofoldenable " don't fold by default
+set foldlevel=1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Files and backups
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Turn backup off
+set nobackup
+set nowb
+set noswapfile
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User Interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Searching
+set ignorecase " case insensitive searching
+set smartcase " case-sensitive if expresson contains a capital letter
+set hlsearch
+set incsearch " set incremental search, like modern browsers
+set nolazyredraw " don't redraw while executing macros
+
+set magic " Set magic on, for regex
+
+set showmatch " show matching braces
+set mat=2 " how many tenths of a second to blink
+
+" switch syntax highlighting on
+syntax on
+
+set encoding=utf8
+let base16colorspace=256  " Access colors present in 256 colorspace"
+set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
+set term=screen-256color
+"set background=dark
+"colorscheme delek
+colorscheme molokai
+
+set number
+
+set autoindent " automatically set indent of new line
+set smartindent
+
+set laststatus=2 " show the satus line all the time
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
+
+map <leader>d :wincmd q<cr>
+
+"""misc for tmux
+"autocmd VimEnter * silent !tmux set status off
+"autocmd VimLeave * silent !tmux set status on
+
+" moving up and down work as you would expect
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+
+"Move a line of text using control
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+" helpers for dealing with other people's code
+nmap \t :set ts=4 sts=4 sw=4 noet<cr>
+nmap \s :set ts=4 sts=4 sw=4 et<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <C-h> :call WinMove('h')<cr>
+map <C-j> :call WinMove('j')<cr>
+map <C-k> :call WinMove('k')<cr>
+map <C-l> :call WinMove('l')<cr>
+
+" Window movement shortcuts
+" move to the window in the direction shown, or create a new window
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfunction
 
