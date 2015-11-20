@@ -1,11 +1,17 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set a map leader for more key combos
+let mapleader = ','
+let g:mapleader = ","
 
 " load plugins from vundle
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
-call vundle#begin()
+call vundle#rc()
+
+"call vundle#begin()
+filetype plugin indent on
 
 " let vundle manage vundle
 Plugin 'gmarik/vundle'
@@ -36,6 +42,9 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'fatih/vim-go'
 
+"Plugin 'vim-scripts/autoit.vim--Breland'
+"au BufNewFile,BufRead *.au3 setf autoit3
+
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'kchmck/vim-coffee-script'
@@ -50,7 +59,7 @@ Plugin 'vim-scripts/VisIncr'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'jiangmiao/auto-pairs'
 
-call vundle#end()
+"call vundle#end()
 "filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -206,9 +215,6 @@ set autoread     " detect when a file is changed
 " make backspace behave in a sane manner
 set backspace=indent,eol,start
 
-" set a map leader for more key combos
-let mapleader = ','
-let g:mapleader = ","
 
 " show tab like >--- and space like ----
 set list
@@ -216,6 +222,7 @@ set listchars=tab:>-,trail:-
 
 " Tab control
 "set noexpandtab " tabs ftw
+set expandtab
 set smarttab       " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=4      " the visible width of tabs
 set softtabstop=4  " edit as if the tabs are 4 characters wide
@@ -255,12 +262,33 @@ set nolazyredraw " don't redraw while executing macros
 set magic " Set magic on, for regex
 
 set showmatch " show matching braces
-set mat=2 " how many tenths of a second to blink
+set mat=2     " how many tenths of a second to blink
+set hid       "Change buffer - without saving
+syntax on     " switch syntax highlighting on
 
-" switch syntax highlighting on
-syntax on
+"No sound on errors.
+set noerrorbells
+set novisualbell
 
-set encoding=utf8
+" language settings
+let $LANG="zh_CN.utf-8"
+"set fileencodings=utf-8,chinese,latin-1,cp936
+set fileencodings=utf-8,ucs-bom,shift-jis,latin1,big5,gb18030,gbk,gb2312,cp936
+set fileencoding=utf-8
+set encoding=utf-8
+scriptencoding utf-8
+
+" for chinese
+set ambiwidth=double
+
+"menu 
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+"console
+language messages zh_CN.utf-8
+"}
+"
 let base16colorspace=256  " Access colors present in 256 colorspace"
 set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
 set term=screen-256color
@@ -272,6 +300,8 @@ set number
 
 set autoindent " automatically set indent of new line
 set smartindent
+set cindent    "C-style indeting
+set wrap       "Wrap lines
 
 set laststatus=2 " show the satus line all the time
 
@@ -304,12 +334,45 @@ nmap \s :set ts=4 sts=4 sw=4 et<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Switch to current dir
+map <leader>cd :cd %:p:h<cr>
 
-map <C-h> :call WinMove('h')<cr>
-map <C-j> :call WinMove('j')<cr>
-map <C-k> :call WinMove('k')<cr>
-map <C-l> :call WinMove('l')<cr>
+" easier moving of code blocks
+vnoremap < <gv
+vnoremap > >gv
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Fileformats
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Favorite filetypes
+set ffs=unix,dos,mac
+nmap <leader>fd :set ff=dos<cr>
+nmap <leader>fu :set ff=unix<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Buffer realted
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Fast open a buffer by search for a name
+map <c-q> :sb
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Abbrevs(Private)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"My information
+iab xdate <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
+"iab xdate <c-r>=strftime("%c")<cr>
+iab xname wallace young
+iab xemail linux.whu@gmail.com
+
+"Smart way to move btw. windows
+" map <C-h> :call WinMove('h')<cr>
+" map <C-j> :call WinMove('j')<cr>
+" map <C-k> :call WinMove('k')<cr>
+" map <C-l> :call WinMove('l')<cr>
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 " Window movement shortcuts
 " move to the window in the direction shown, or create a new window
 function! WinMove(key)
