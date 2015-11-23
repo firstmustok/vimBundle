@@ -20,7 +20,10 @@ Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim' " fuzzy find files
 Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
 Plugin 'benmills/vimux'
+
 Plugin 'tpope/vim-fugitive' " the ultimate git helper
+autocmd QuickFixCmdPost *grep* cwindow
+
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
 Plugin 'firstmustok/Conque-Shell'
 Plugin 'vim-scripts/a.vim'
@@ -44,6 +47,8 @@ Plugin 'fatih/vim-go'
 
 "Plugin 'vim-scripts/autoit.vim--Breland'
 "au BufNewFile,BufRead *.au3 setf autoit3
+au BufNewFile,BufRead *.au3 set noexpandtab
+au BufNewFile,BufRead *.au3 set nolist
 
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
@@ -56,7 +61,20 @@ Plugin 'jlanzarotta/bufexplorer'
 Plugin 'vimwiki'
 Plugin 'Markdown'
 Plugin 'vim-scripts/VisIncr'
+
 Plugin 'junegunn/vim-easy-align'
+"for align separator
+"{ Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
+
+"for align with :
+vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
+"}
+
+
 Plugin 'jiangmiao/auto-pairs'
 
 "call vundle#end()
@@ -180,16 +198,6 @@ nmap <leader>t <Plug>(easymotion-tn)
 "map  N <Plug>(easymotion-prev)
 map <silent> <leader><cr> :noh<cr>
 
-"for align separator
-"{ Start interactive EasyAlign in visual mode
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign with a Vim movement
-nmap <Leader>a <Plug>(EasyAlign)
-
-"for align with :
-vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
-"}
 
 """""""""""""""""""""""""""""""""""""""""""
 " => syntastic plugin
@@ -273,10 +281,15 @@ set novisualbell
 " language settings
 let $LANG="zh_CN.utf-8"
 "set fileencodings=utf-8,chinese,latin-1,cp936
-set fileencodings=utf-8,ucs-bom,shift-jis,latin1,big5,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,gb18030,gbk,gb2312,cp936,ucs-bom,shift-jis,latin1,big5
 set fileencoding=utf-8
 set encoding=utf-8
 scriptencoding utf-8
+
+set termencoding=utf-8
+
+"set guifont=YaHei_Consolas_Hybird:h10:cANSI
+set guifont=YaHei_Consolas_Hybird:h10:cANSI
 
 " for chinese
 set ambiwidth=double
