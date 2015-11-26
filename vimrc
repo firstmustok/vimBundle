@@ -1,224 +1,81 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set a map leader for more key combos
-let mapleader = ','
-let g:mapleader = ","
-
 " load plugins from vundle
+set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-"call vundle#begin()
-filetype plugin indent on
-
+call vundle#begin()
 " let vundle manage vundle
 Plugin 'gmarik/vundle'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " utilities
-Plugin 'kien/ctrlp.vim' " fuzzy find files
-Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
 Plugin 'benmills/vimux'
-
-Plugin 'tpope/vim-fugitive' " the ultimate git helper
-autocmd QuickFixCmdPost *grep* cwindow
-
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
 Plugin 'firstmustok/Conque-Shell'
 Plugin 'vim-scripts/a.vim'
-
-" colorschemes
-Plugin 'chriskempson/base16-vim'
-Plugin 'tomasr/molokai'
-
-" --- Development ---
-" JavaScript plugins
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'ervandew/supertab'
-
-Plugin 'scrooloose/syntastic'
-
-"######### Languages ###########
-Plugin 'rust-lang/rust.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'fatih/vim-go'
-
-"Plugin 'vim-scripts/autoit.vim--Breland'
-"au BufNewFile,BufRead *.au3 setf autoit3
-au BufNewFile,BufRead *.au3 set noexpandtab
-au BufNewFile,BufRead *.au3 set nolist
-
-Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'kchmck/vim-coffee-script'
-
-" buffer
-Plugin 'jlanzarotta/bufexplorer'
 
 " aux
 Plugin 'vimwiki'
 Plugin 'Markdown'
 Plugin 'vim-scripts/VisIncr'
 
-Plugin 'junegunn/vim-easy-align'
-"for align separator
-"{ Start interactive EasyAlign in visual mode
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign with a Vim movement
-nmap <Leader>a <Plug>(EasyAlign)
-
-"for align with :
-vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
-"}
-
+" Fast navigation
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
+Plugin 'kien/ctrlp.vim'      " fuzzy find files
 
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'tmhedberg/matchit'          " Extended '%' matching
+Plugin 'easymotion/vim-easymotion'  " Fast jumping from lines
 
-"call vundle#end()
-"filetype plugin indent on
+" => Git
+Plugin 'tpope/vim-fugitive' " the ultimate git helper
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" colorschemes
+Plugin 'chriskempson/base16-vim'
+Plugin 'tomasr/molokai'
 
-" close NERDTree after a file is opened
-let g:NERDTreeQuitOnOpen=0
-" show hidden files in NERDTree
-let NERDTreeShowHidden=0
-"NERDTree ignore some files
-let NERDTreeIgnore = ['.git', '.svn', '\.pyc$', '\.o$', '\.cxx$', '\.so$', '\.swp$']
+"######### Languages ###########
+Plugin 'rust-lang/rust.vim'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'fatih/vim-go'
+"Plugin 'vim-scripts/autoit.vim--Breland'
 
-"open NERDTree with current dir
-map <silent> <leader>q :NERDTree %:p:h<cr>
-" Toggle NERDTree
-nmap <silent> <leader>k :NERDTreeToggle<cr>
-" expand to the path of the file in the current buffer
-nmap <silent> <leader>y :NERDTreeFind<cr>
-
-" map fuzzyfinder (CtrlP) plugin
-" nmap <silent> <leader>t :CtrlP<cr>
-nmap <silent> <leader>r :CtrlPBuffer<cr>
-" let g:ctrlp_map='<leader>t'
-let g:ctrlp_dotfiles=1
-let g:ctrlp_working_path_mode = 'ra'
-
-" CtrlP ignore patterns
-let g:ctrlp_custom_ignore = {
-            \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$',
-            \ 'file': '\.exe$\|\.so$|\.o$|\.swp$'
-            \ }
-
-" search the nearest ancestor that contains .git, .hg, .svn
-let g:ctrlp_working_path_mode = 2
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'kchmck/vim-coffee-script'
 
 " airline
 Plugin 'bling/vim-airline'
-" let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="powerlineish"
-"let g:airline_detect_whitespace=0
-let g:airline_powerline_fonts = 1
-let g:airline_symbols = {}
-
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-
-" buffer
-map <silent> <leader>ff :only<cr>
-"Fast open a buffer by search for a name
-map <c-q> :sb
 
 " rainbow parenthess
 Plugin 'kien/rainbow_parentheses.vim'
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
-"############# Auto complete ##############
-" snippets & autocomplete
-let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsExpandTrigger="<c-n>"
-let g:UltiSnipsJumpForwardTrigger="<c-l>"
-let g:UltiSnipsJumpBackwardTrigger="<c-h>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
-
-" supertab & auto complete
-Plugin 'Shougo/neocomplete.vim'
-set completeopt=longest,menu
-let g:neocomplete#enable_at_startup = 1
-
-"############ supertab ########## 
-"" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-let g:SuperTabDefaultCompletionType="context" 
-"" from top to bottom
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
 
-" Fast navigation
-" Extended '%' matching
-Plugin 'tmhedberg/matchit'
-" " Fast jumping from lines
-Plugin 'easymotion/vim-easymotion'
-nmap <leader>s <Plug>(easymotion-sn)
-nmap <leader>t <Plug>(easymotion-tn)
-"map  n <Plug>(easymotion-next)
-"map  N <Plug>(easymotion-prev)
-map <silent> <leader><cr> :noh<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""
 " => syntastic plugin
-"""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+Plugin 'scrooloose/syntastic'
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'passive_filetypes': ['cpp', 'c']  }
-"let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+" => Development
+Plugin 'ervandew/supertab'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'Shougo/neocomplete.vim'
 
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible " not compatible with vi
 set autoread     " detect when a file is changed
+
+" set a map leader for more key combos
+let mapleader = ','
+let g:mapleader = ","
 
 " make backspace behave in a sane manner
 set backspace=indent,eol,start
@@ -321,9 +178,7 @@ set laststatus=2 " show the satus line all the time
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
-
 map <leader>d :wincmd q<cr>
 
 """misc for tmux
@@ -363,12 +218,6 @@ nmap <leader>fd :set ff=dos<cr>
 nmap <leader>fu :set ff=unix<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Buffer realted
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Fast open a buffer by search for a name
-map <c-q> :sb
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Abbrevs(Private)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "My information
@@ -400,4 +249,176 @@ function! WinMove(key)
         exec "wincmd ".a:key
     endif
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Buffer realted
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <silent> <leader>ff :only<cr>
+"Fast open a buffer by search for a name
+map <c-q> :sb
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Easy moving
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"for align separator
+"{ Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
+
+"for align with :
+vmap <Leader>a :EasyAlign * /:/s0r1l1<cr>
+"}
+"
+
+" Easy moving
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>s <Plug>(easymotion-sn)
+nmap <leader>t <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
+map <silent> <leader><cr> :noh<cr>
+
+" map fuzzyfinder (CtrlP) plugin
+" nmap <silent> <leader>t :CtrlP<cr>
+nmap <silent> <leader>r :CtrlPBuffer<cr>
+" let g:ctrlp_map='<leader>t'
+let g:ctrlp_dotfiles=1
+let g:ctrlp_working_path_mode = 'ra'
+
+" CtrlP ignore patterns
+let g:ctrlp_custom_ignore = {
+            \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$',
+            \ 'file': '\.exe$\|\.so$|\.o$|\.swp$'
+            \ }
+
+" search the nearest ancestor that contains .git, .hg, .svn
+let g:ctrlp_working_path_mode = 2
+
+" NERDTree settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" close NERDTree after a file is opened
+let g:NERDTreeQuitOnOpen=0
+" show hidden files in NERDTree
+let NERDTreeShowHidden=0
+"NERDTree ignore some files
+let NERDTreeIgnore = ['.git', '.svn', '\.pyc$', '\.o$', '\.cxx$', '\.so$', '\.swp$']
+
+"open NERDTree with current dir
+map <silent> <leader>q :NERDTree %:p:h<cr>
+" Toggle NERDTree
+nmap <silent> <leader>k :NERDTreeToggle<cr>
+" expand to the path of the file in the current buffer
+nmap <silent> <leader>y :NERDTreeFind<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Git
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd QuickFixCmdPost *grep* cwindow "show search result in quick fix window
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => For autoit files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"au BufNewFile,BufRead *.au3 setf autoit3
+au BufNewFile,BufRead *.au3 set noexpandtab
+au BufNewFile,BufRead *.au3 set nolist
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => For status line
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme="powerlineish"
+"let g:airline_detect_whitespace=0
+let g:airline_powerline_fonts = 1
+let g:airline_symbols = {}
+
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => For rainbow parentheses
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => For Development syntastic errors
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'passive_filetypes': ['cpp', 'c']  }
+"let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+
+" => For Development -- Auto complete
+"----------------------------------------------------------
+" snippets & autocomplete
+let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsExpandTrigger="<c-n>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
+
+" => For Development --  supertab
+"----------------------------------------------------------
+"" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+"let g:SuperTabDefaultCompletionType="context"
+"" from top to bottom
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" => For Development -- Auto complete
+"----------------------------------------------------------
+set completeopt=longest,menu
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplcache_enable_quick_match = 1
+
+"let g:neosnippet#enable_snipmate_compatibility = 1
+"let g:neosnippet#disable_runtime_snippets = { '-' : 1,  }
+"let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/UltiSnips/'
+"if !exists('g:neocomplete#sources#omni#input_patterns')
+"    let g:neocomplete#sources#omni#input_patterns = {}
+"endif
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
