@@ -9,12 +9,12 @@ Plugin 'gmarik/vundle'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" utilities
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" " utilities
 Plugin 'benmills/vimux'
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
 Plugin 'firstmustok/Conque-Shell'
 Plugin 'vim-scripts/a.vim'
+Plugin 'vim-scripts/runzip'
 
 " aux
 Plugin 'vimwiki'
@@ -25,6 +25,7 @@ Plugin 'vim-scripts/VisIncr'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
 Plugin 'kien/ctrlp.vim'      " fuzzy find files
+Plugin 'vim-scripts/netrw.vim'
 
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
@@ -51,7 +52,7 @@ Plugin 'kchmck/vim-coffee-script'
 " airline
 Plugin 'bling/vim-airline'
 
-" rainbow parenthess
+" rainbow parentheses
 Plugin 'kien/rainbow_parentheses.vim'
 
 
@@ -63,6 +64,10 @@ Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Shougo/neocomplete.vim'
+
+"util
+"Plugin 'szw/vim-dict'
+Plugin 'phongvcao/vim-stardict'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -119,7 +124,7 @@ set noswapfile
 
 " Searching
 set ignorecase " case insensitive searching
-set smartcase " case-sensitive if expresson contains a capital letter
+set smartcase " case-sensitive if expression contains a capital letter
 set hlsearch
 set incsearch " set incremental search, like modern browsers
 set nolazyredraw " don't redraw while executing macros
@@ -421,4 +426,35 @@ let g:neocomplcache_enable_quick_match = 1
 "endif
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+"
+" => For go-lang
+"----------------------------------------------------------
+au BufNewFile,BufRead *.go set noexpandtab
+au BufNewFile,BufRead *.go set nolist
+
+" =>  dictionary
+" dependence: apt-get install sdvc
+"----------------------------------------------------------
+function! PlayVoice()
+    let wordUnderCursor = tolower(expand("<cword>"))
+    exec "!yv ".wordUnderCursor." 2>&1 1>/dev/null &"
+endfunction
+
+"map <silent> <leader>a :!yv <c-r><c-w><cr><cr>
+map <silent> <leader>a :call PlayVoice()<cr><cr>
+
+" Make vim-stardict split open in a :split (default value)
+let g:stardict_split_horizontal = 1
+
+" Set vim-stardict split width (or height) to 20 based on whether
+" vim-stardict split is a :vsplit (or :split)
+let g:stardict_split_size = 10
+
+" Map vim-stardict's commands
+" Ready for typing the word in
+"nnoremap <leader>sw :StarDict<Space>
+nnoremap <leader>e :StarDict <c-r><c-w><cr>
+nnoremap <leader>cc :close <cr>
+" Lookup the word under cursor
+"nnoremap <leader>sc :StarDictCursor<CR>"
 
