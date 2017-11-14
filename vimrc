@@ -50,7 +50,8 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'kchmck/vim-coffee-script'
 
 " airline
-Plugin 'bling/vim-airline'
+" Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " rainbow parentheses
 Plugin 'kien/rainbow_parentheses.vim'
